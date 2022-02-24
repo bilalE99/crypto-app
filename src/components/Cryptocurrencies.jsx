@@ -14,17 +14,24 @@ const Cryptocurrencies = ({ simplified }) => {
 
   useEffect(() => {
     setCryptos(cryptosList?.data?.coins);
-
     const filteredData = cryptosList?.data?.coins.filter((item) => item.name.toLowerCase().includes(searchTerm));
-
     setCryptos(filteredData);
   }, [cryptosList, searchTerm]);
+  //this use effect method will run eveytime cryptoList or searchTerm is changed
 
   if (isFetching) return <Loader />;
 
   return (
     <>
-  
+    {/*Only display search bar in cryptocurrency route not homepage */}
+      {!simplified && (
+      <div className="search-crypto">
+          <Input
+            placeholder="Search Cryptocurrency"
+            onChange={(e) => setSearchTerm(e.target.value.toLowerCase())}
+          />
+        </div>
+      )}
       <Row gutter={[32, 32]} className="crypto-card-container">
         {cryptos?.map((currency) => (
           <Col xs={24} sm={12} lg={6} className="crypto-card" key={currency.uuid}>
